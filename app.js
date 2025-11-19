@@ -32,6 +32,8 @@ const App = () => {
             <Introduction data={data} />
             
             <svg width={width} height={height}>
+
+                //1.5 Remove the width and height from the WorldGraticule component
                 
                 <WorldGraticule />
                 // TODO 2.1: add the countries element and pass it the world Atlas
