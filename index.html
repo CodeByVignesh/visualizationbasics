@@ -1,28 +1,33 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<!-- 1.2 Added title to the Visualization -->
-		<title>Interactive: Missing Migrants on a World Map over Time</title>
-		<meta charset="utf-8"> 
-		<link rel="preconnect" href="https://fonts.googleapis.com">
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-		<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet"> 
-		<!-- style -->
-		<link rel="stylesheet" href="style.css">
-		<!-- Note: when deploying, replace "development.js" with "production.min.js". -->
-		<script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>  <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
-		<script src="https://unpkg.com/@babel/standalone@7.13.12/babel.min.js" crossorigin></script>
-		<script src="https://unpkg.com/d3@7.1.1/dist/d3.min.js" crossorigin></script>
-		<script src="https://unpkg.com/topojson@3.0.2/dist/topojson.min.js" crossorigin></script>
-	</head>
-	<body>
-		<noscript>
-			You need to enable JavaScript to run this app.
-		</noscript>
-		<!-- This is where the visualization will be placed. -->
-		<div id="root"></div>
-		<script type="text/babel" src="data_loading.js"></script>
-		<script type="text/babel" src="static_content.js"></script>
-		<script type="text/babel" src="app.js">	</script>
-	</body>
+
+<head>
+	<!-- 1.2 Added title to the Visualization -->
+	<title>Interactive: Missing Migrants on a World Map over Time</title>
+	<meta charset="utf-8">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+	<!-- style -->
+	<link rel="stylesheet" href="style.css">
+	<!-- Note: when deploying, replace "development.js" with "production.min.js". -->
+	<script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+	<script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+	<script src="https://unpkg.com/@babel/standalone@7.13.12/babel.min.js" crossorigin></script>
+	<script src="https://unpkg.com/d3@7.1.1/dist/d3.min.js" crossorigin></script>
+	<script src="https://unpkg.com/topojson@3.0.2/dist/topojson.min.js" crossorigin></script>
+</head>
+
+<body>
+	<noscript>
+		You need to enable JavaScript to run this app.
+	</noscript>
+	<!-- This is where the visualization will be placed. -->
+	<div id="root"></div>
+	<script type="text/babel" src="data_loading.js"></script>
+	<script type="text/babel" src="static_content.js"></script>
+	<script type="text/babel" src="bubbles.js"></script>
+	<script type="text/babel" src="app.js">	</script>
+</body>
+
 </html>
