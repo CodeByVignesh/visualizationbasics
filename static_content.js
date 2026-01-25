@@ -43,9 +43,9 @@ const path = d3.geoPath(projection);
 // Generate the lon/lat grid lines using d3.geoGraticule
 const graticule = d3.geoGraticule();
 
-const WorldGraticule = () => (
+const WorldGraticule = () => {
     // TODO 4.2: Memoization for sphere and graticules
-    <g className="worldGraticule">
+    const sphereAndGraticule = React.useMemo(() => (
         <>
             {/* Draw a sphere under the projection */}
             <path className="sphere" d={path({type: 'Sphere'})} />
@@ -53,8 +53,14 @@ const WorldGraticule = () => (
             {/* Draw the graticule (grid lines) */}
             <path className="graticule" d={path(graticule())} />
         </>
-    </g>
-);
+    ), []); // Empty dependency array since projection and graticule are static
+
+    return (
+        <g className="worldGraticule">
+            {sphereAndGraticule}
+        </g>
+    );
+};
 
 // --------------------------------------------------
 // TODO 2.1 
@@ -63,12 +69,22 @@ const WorldGraticule = () => (
 // the data we work on is composed of land and interiors (use destructuring)
 const Countries = ({ 
     worldAtlas: {land, interiors}, 
-}) => 
-(
+}) => {
+    // TODO 4.2: Memoization for land and interiors
+    const landAndInteriors = React.useMemo(() => (
+        <>
+            {
+                land.features.map((feature, index) => (
+                    <path key={index} className="land" d={path(feature)} />
+                ))
+            }
+            <path className="interiors" d={path(interiors)} />
+        </>
+    ), [land, interiors]); // Dependencies are land and interiors from worldAtlas
+
+    return (
         // TODO 2.1: delete the following line
         // //<div>Placeholder</div>
-
-    // TODO 4.2: Memoization for land and interiors
 
         // TODO 2.1: create a group with class name countries for styling that wraps the following JS scope
         // TODO 2.1: enter a JS scope inside the group element (everything that follows will be in curly braces)
@@ -77,16 +93,8 @@ const Countries = ({
                     // TODO 2.1: map the land features to path elements that draw the land masses 
                     // (styling will make sure the paths are filled with the correct color)
                 // TODO: 2.1: draw another path for the interiors
-    <g className="countries">
-        {
-            <>
-                {
-                    land.features.map((feature, index) => (
-                        <path key={index} className="land" d={path(feature)} />
-                    ))
-                }
-                <path className="interiors" d={path(interiors)} />
-            </>
-        }
-    </g>
-);
+        <g className="countries">
+            {landAndInteriors}
+        </g>
+    );
+};
