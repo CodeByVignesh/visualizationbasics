@@ -22,9 +22,11 @@ const Bubbles = ({
     // TODO 2.2: return the bubbles svg definition
     // Use scaleSqrt because we want the AREA (not radius) to be proportional to the value
     // This ensures visual perception matches the data magnitude
-    const sizeScale = d3.scaleSqrt()
-        .domain([0, d3.max(data, sizeValue)])
-        .range([0, maxRadius]);
+    const sizeScale = React.useMemo(() => 
+        d3.scaleSqrt()
+            .domain([0, d3.max(data, sizeValue)])
+            .range([0, maxRadius])
+    , [data]); // Dependency is data since the scale depends on the max value in data
 
     return (
         // TODO 2.2 wrap everything that follows in a group element with className bubbleMarks

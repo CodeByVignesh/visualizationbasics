@@ -70,7 +70,7 @@ const margin = { top: 20, right: 30, bottom: 30, left: 60 };
 const xAxisTickFormat = d3.timeFormat('%d.%m.%Y');
 
 // TODO 4.1: brush extent setter as parameter
-const Histogram = ({ width, height, data }) => {
+const Histogram = ({ width, height, data, setBrushExtent }) => {
     // TODO 3.1: compute innerHeight and innerWidth by subtracting the margins
     const innerWidth = width - margin.left - margin.right;
     const innerHeight = height - margin.top - margin.bottom;
@@ -103,6 +103,27 @@ const Histogram = ({ width, height, data }) => {
         .domain([0, d3.max(binnedData, d => d.y)])
         .range([innerHeight, 0]);
 
+    // Create a ref for the brush
+    const brushRef = React.useRef();
+
+    // Implement D3 brush
+    React.useEffect(() => {
+        const brush = d3.brushX()
+            .extent([[0, 0], [innerWidth, innerHeight]])
+            .on('brush end', (event) => {
+                if (event.selection) {
+                    // Convert pixel coordinates to date values
+                    const [x0, x1] = event.selection;
+                    setBrushExtent([xScale.invert(x0), xScale.invert(x1)]);
+                } else {
+                    // Clear the brush selection
+                    setBrushExtent(null);
+                }
+            });
+
+        d3.select(brushRef.current).call(brush);
+    }, [innerWidth, innerHeight, xScale, setBrushExtent]);
+
     return (
         <>
             {/* TODO 3.2: return a width by height, filled, white rectangle as the background */}
@@ -123,6 +144,8 @@ const Histogram = ({ width, height, data }) => {
                 >
                     {yAxisLabel}
                 </text>
+                {/* Brush overlay */}
+                <g ref={brushRef} className="brush" />
             </g>
         </>
     );
